@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template
 import requests
-
-SPOONACULAR_API_KEY = "8ddbbd75ed2c403c99f24d96abbb75e6"
+import os
+SPOONACULAR_API_KEY = "os.getenv('SPOONACULAR_API_KEY')"
 app = Flask(__name__)
 
 def getRecipes(ingredients):
