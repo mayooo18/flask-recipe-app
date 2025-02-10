@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template
 import requests
 import os
-SPOONACULAR_API_KEY = "os.getenv('SPOONACULAR_API_KEY')"
+SPOONACULAR_API_KEY = os.getenv("SPOONACULAR_API_KEY")
 app = Flask(__name__)
 
 def getRecipes(ingredients):
@@ -59,3 +59,4 @@ def index():
 
 if __name__ == "__main__":
     app.run(debug=True)
+    
