@@ -26,7 +26,7 @@ def getRecipes(ingredients):
             recipes = response.json().get("results", [])
 
             apiRemaining = int(response.headers.get("X-Ratelimit-Remaining", apiLimit - apiCount))
-            apiCount += 1
+            apiCount += 5
             # checks if api limit is reached
 
             # ✅ Fetch full nutrition data for each recipe
