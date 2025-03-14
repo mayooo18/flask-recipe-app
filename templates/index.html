@@ -1,158 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Recipe Finder by Mariooo</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #1f1e1e;
-            margin: 0;
-            padding: 0;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #1f1e1e;
+        margin: 0;
+        padding: 0;
+      }
 
-        h2 {
-            color: #ffffff;
-            margin-top: 20px;
-        }
+      h2 {
+        color: #ffffff;
+        margin-top: 20px;
+      }
+      /* API Request Count Styling */
+.api-count {
+    background: #333;
+    color: white;
+    padding: 10px;
+    margin: 20px auto;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 1px 1px 5px rgba(255, 255, 255, 0.1);
+    text-align: center;
+    max-width: 400px;
+    border: 2px solid #00eeff;
+}
 
-        /* Search Form */
-        form {
-            margin: 20px auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-        h3 {
-            color: #ffffff;
-            margin-top: 20px;
-        }
-        input {
-            padding: 10px;
-            width: 300px;
-            font-size: 16px;
-            border: 2px solid #00eeff;
-            border-radius: 5px;
-            outline: none;
-        }
+.api-count h4 {
+    margin: 5px 0;
+    color: #00eeff;
+}
 
-        button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #00eeff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-            border-radius: 5px;
-        }
+      /* Search Form */
+      form {
+        margin: 20px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      h3 {
+        color: #ffffff;
+        margin-top: 20px;
+      }
+      input {
+        padding: 10px;
+        width: 300px;
+        font-size: 16px;
+        border: 2px solid #00eeff;
+        border-radius: 5px;
+        outline: none;
+      }
 
-        button:hover {
-            background-color: #00eeff;
-        }
+      button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #00eeff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+        border-radius: 5px;
+      }
 
-        /* Recipe List */
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0 auto;
-            max-width: 700px;
-        }
+      button:hover {
+        background-color: #00eeff;
+      }
 
-        li {
-            background: rgb(113, 113, 113);
-            padding: 20px;
-            margin: 20px auto;
-            border-radius: 10px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-            text-align: left;
-            transition: 0.3s;
-        }
+      /* Recipe List */
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 auto;
+        max-width: 700px;
+      }
 
-        li:hover {
-            transform: scale(1.02);
-            box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
-        }
+      li {
+        background: rgb(113, 113, 113);
+        padding: 20px;
+        margin: 20px auto;
+        border-radius: 10px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        text-align: left;
+        transition: 0.3s;
+      }
 
-        /* Recipe Title Links */
-        a {
-            text-decoration: none;
-            color: #00eeff;
-            font-size: 18px;
-        }
+      li:hover {
+        transform: scale(1.02);
+        box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+      }
 
-        a:hover {
-            text-decoration: underline;
-        }
+      /* Recipe Title Links */
+      a {
+        text-decoration: none;
+        color: #00eeff;
+        font-size: 18px;
+      }
 
-        /* Recipe Image */
-        img {
-            border-radius: 10px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-            display: block;
-            margin: 10px auto;
-            width: 200px;
-        }
+      a:hover {
+        text-decoration: underline;
+      }
 
-        /* Nutrition Info */
-        .nutrition {
-            background: #b5b5b5;
-            padding: 10px;
-            margin-top: 15px;
-            border-radius: 8px;
-            font-size: 14px;
-            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+      /* Recipe Image */
+      img {
+        border-radius: 10px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        display: block;
+        margin: 10px auto;
+        width: 200px;
+      }
 
-        .nutrition p {
-            margin: 5px 0;
-            font-size: 14px;
-        }
+      /* Nutrition Info */
+      .nutrition {
+        background: #b5b5b5;
+        padding: 10px;
+        margin-top: 15px;
+        border-radius: 8px;
+        font-size: 14px;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .nutrition p {
+        margin: 5px 0;
+        font-size: 14px;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <h2>Enter the Ingredients Foo!: </h2>
+  <body>
+    <h2>Enter the Ingredients Foo!:</h2>
     <form method="POST">
-        <input type="text" name="ingredients" placeholder="Type ingredients in lowercase with commas">
-        <button type="submit">Find Recipes NEOWW!</button>
+      <input
+        type="text"
+        name="ingredients"
+        placeholder="Type ingredients in lowercase with commas"
+      />
+      <button type="submit">Find Recipes NEOWW!</button>
     </form>
+
+    <!--ADDED HTML FOR RECIPE API LEFTOVER-->
+    <div class=" api-count">
+    <h4>You have <strong>{{apiRemaining}}</strong> API requests left today.</h4>
+    <h4> you have used <strong>{{apiUsed}} </strong></h4>
+
 
     {% if recipes %}
     <h3>Recipes Found:</h3>
     <ul>
-        {% for recipe in recipes %}
-        <li>
-            <strong>
-                <a href="https://spoonacular.com/recipes/{{ recipe.title | replace(' ', '-') }}-{{ recipe.id }}" target="_blank">
-                    {{ recipe.title }}
-                </a>
-            </strong><br>
-            <img src="{{ recipe.image }}" alt="Recipe Image"><br>
+      {% for recipe in recipes %}
+      <li>
+        <strong>
+          <a
+            href="https://spoonacular.com/recipes/{{ recipe.title | replace(' ', '-') }}-{{ recipe.id }}"
+            target="_blank"
+          >
+            {{ recipe.title }}
+          </a> </strong
+        ><br />
+        <img src="{{ recipe.image }}" alt="Recipe Image" /><br />
 
-            {% if recipe.nutrition and recipe.nutrition.nutrients %}
-                <div class="nutrition">
-                    {% for nutrient in recipe.nutrition.nutrients %}
-                        {% if nutrient.name in ['Calories', 'Protein', 'Carbohydrates', 'Fat'] %}
-                            <p><strong>{{ nutrient.name }}:</strong> {{ nutrient.amount }} {{ nutrient.unit }}</p>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            {% else %}
-                <p><strong>Nutrition info not available</strong></p>
-            {% endif %}
-        </li>
-        {% endfor %}
+        {% if recipe.nutrition and recipe.nutrition.nutrients %}
+        <div class="nutrition">
+          {% for nutrient in recipe.nutrition.nutrients %} {% if nutrient.name
+          in ['Calories', 'Protein', 'Carbohydrates', 'Fat'] %}
+          <p>
+            <strong>{{ nutrient.name }}:</strong> {{ nutrient.amount }} {{
+            nutrient.unit }}
+          </p>
+          {% endif %} {% endfor %}
+        </div>
+        {% else %}
+        <p><strong>Nutrition info not available</strong></p>
+        {% endif %}
+      </li>
+      {% endfor %}
     </ul>
-{% else %}
-    <p style="color: white; font-size: 18px; margin-top: 20px;">No recipes found. Try different ingredients!</p>
-{% endif %}
-</body>
-
+    {% else %}
+    <p style="color: white; font-size: 18px; margin-top: 20px">
+      No recipes found. Try different ingredients!
+    </p>
+    {% endif %}
+  </body>
 </html>

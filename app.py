@@ -1,11 +1,20 @@
 from flask import Flask, request, render_template
 import requests
 import os
+
+apiLimit= 150 # 150 requests per day
+apiCount = 0
 SPOONACULAR_API_KEY = os.getenv("SPOONACULAR_API_KEY")
+
+
 app = Flask(__name__)
 
 def getRecipes(ingredients):
+    global apiCount
     ingredients = ingredients.strip()
+    if not ingredients:
+        return [], 0, apiCount
+    
 
     url=f"https://api.spoonacular.com/recipes/complexSearch?query={ingredients}&number=5&maxCalories=500&apiKey={SPOONACULAR_API_KEY}"
 
@@ -15,6 +24,10 @@ def getRecipes(ingredients):
 
         if response.status_code == 200:
             recipes = response.json().get("results", [])
+
+            apiRemaining = int(response.headers.get("X-Ratelimit-Remaining", apiLimit - apiCount))
+            apiCount += 1
+            # checks if api limit is reached
 
             # ✅ Fetch full nutrition data for each recipe
             for recipe in recipes:
@@ -32,27 +45,32 @@ def getRecipes(ingredients):
                     print(f"Failed to fetch nutrition for recipe ID: {recipe_id}")
                     recipe["nutrition"] = {}
 
-            return recipes  # ✅ Return processed recipes
+            return recipes, apiRemaining, apiCount  # ✅ Return processed recipes and api count
 
         else:
             print(f"Error fetching recipes: {response.status_code}")
-            return []
+            return [], apiLimit - apiCount , apiCount
 
     except requests.exceptions.RequestException:
         print("Error: Could not connect to Spoonacular API.")
-        return []
+        return [], apiLimit - apiCount, apiCount
       
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     recipes = []
+    apiRemaining = apiLimit -apiCount
+    apiUsed = apiCount
+
     if request.method== "POST":
         ingredients = request.form.get("ingredients")
-        recipes = getRecipes(ingredients)
+        recipes, apiRemaining, apiUsed = getRecipes(ingredients)
+
+
     
     
 
-    return render_template("index.html", recipes=recipes)
+    return render_template("index.html", recipes=recipes, apiRemaining=apiRemaining, apiUsed=apiUsed)
     
 
 
